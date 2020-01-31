@@ -11,7 +11,7 @@
     "IIS Express": {
       "commandName": "Project",
       "environmentVariables": {
-        "COURSE_INFO_SQL_CONNECTION_STRING": "Server=LAPTOP-733A049A;Database=CourseLibraryDB;Trusted_Connection=true;",
+        "COURSE_INFO_SQL_CONNECTION_STRING": "Server=HQ-70M2DH2\\LFALLON;Database=CourseLibraryDB;Trusted_Connection=true;",
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "applicationUrl": "http://localhost:51044"

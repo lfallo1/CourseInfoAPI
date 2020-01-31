@@ -1,3 +1,4 @@
+using AutoMapper;
 using CourseInfoAPI.DbContexts;
 using CourseInfoAPI.Services;
 using Microsoft.AspNetCore.Builder;
@@ -15,13 +16,18 @@ namespace CityInfoAPI
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers(setupAction =>
+            {
+                setupAction.ReturnHttpNotAcceptable = true;
+            }).AddXmlDataContractSerializerFormatters();
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             services.AddScoped<ICourseLibraryRepository, CourseLibraryRepository>();
+
             services.AddDbContext<CourseLibraryContext>(options =>
             {
-                Console.WriteLine(Environment.GetEnvironmentVariable("COURSE_INFO_SQL_CONNECTION_STRING"));
                 options.UseSqlServer(Environment.GetEnvironmentVariable("COURSE_INFO_SQL_CONNECTION_STRING"));
-                //options.UseSqlServer(@"Server=LAPTOP-733A049A;Database=CourseLibraryDB;Trusted_Connection=true;");
             });
         }
 
