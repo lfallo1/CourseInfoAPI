@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
-using CourseInfoAPI.Helpers;
 using CourseInfoAPI.Models;
 using CourseInfoAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 
-namespace CourseInfo.Controllers
+namespace CourseInfoAPI.Controllers
 {
     [ApiController]
     [Route("api/authors")]
@@ -19,10 +18,11 @@ namespace CourseInfo.Controllers
         public AuthorsController(ICourseLibraryRepository courseLibraryRepository, IMapper mapper)
         {
             _courseLibraryRepository = courseLibraryRepository ?? throw new ArgumentNullException(nameof(courseLibraryRepository));
-            _mapper = mapper;
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         [HttpGet]
+        [HttpHead]
         public ActionResult<IEnumerable<AuthorDto>> getAuthors()
         {
             var authors = _courseLibraryRepository.GetAuthors();
