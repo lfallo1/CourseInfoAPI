@@ -1,5 +1,6 @@
 ﻿using CourseInfoAPI.DbContexts;
 using CourseInfoAPI.Entities;
+using CourseInfoAPI.ResourceParameters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -118,9 +119,34 @@ namespace CourseInfoAPI.Services
             return _context.Authors.FirstOrDefault(a => a.Id == authorId);
         }
 
-        public IEnumerable<Author> GetAuthors()
+        private IEnumerable<Author> GetAuthors()
         {
             return _context.Authors.ToList<Author>();
+        }
+
+        public IEnumerable<Author> GetAuthors(AuthorsResourceParameters authorsResourceParameters)
+        {
+            if (String.IsNullOrWhiteSpace(authorsResourceParameters.MainCategory) && String.IsNullOrWhiteSpace(authorsResourceParameters.SearchQuery))
+            {
+                return GetAuthors();
+            }
+
+            //assign as IQueryable to sql call is deferred until collection is iterated over or converted to list/array/dictionary
+            var collection = _context.Authors as IQueryable<Author>;
+
+            if (!String.IsNullOrWhiteSpace(authorsResourceParameters.MainCategory))
+            {
+                collection = collection
+                .Where(a => a.MainCategory == authorsResourceParameters.MainCategory.Trim());
+            }
+
+            if (!String.IsNullOrWhiteSpace(authorsResourceParameters.SearchQuery))
+            {
+                collection = collection
+                    .Where(a => (a.FirstName + a.LastName + a.MainCategory).Contains(authorsResourceParameters.SearchQuery.Trim()));
+            }
+
+            return collection.ToList(); //now query will be executed
         }
 
         public IEnumerable<Author> GetAuthors(IEnumerable<Guid> authorIds)

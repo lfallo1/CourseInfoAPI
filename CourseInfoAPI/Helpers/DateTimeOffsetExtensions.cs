@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CourseInfoAPI.Helpers
 {
@@ -11,7 +8,7 @@ namespace CourseInfoAPI.Helpers
         {
             var currentDate = DateTime.UtcNow;
             int age = currentDate.Year - dateTimeOffset.Year;
-            if(currentDate < dateTimeOffset)
+            if (currentDate < dateTimeOffset)
             {
                 age--;
             }

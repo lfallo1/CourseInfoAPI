@@ -1,6 +1,6 @@
-﻿using CourseInfoAPI.Entities;
+﻿using System;
+using CourseInfoAPI.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace CourseInfoAPI.DbContexts
 {
@@ -9,8 +9,9 @@ namespace CourseInfoAPI.DbContexts
 
         public CourseLibraryContext(DbContextOptions<CourseLibraryContext> options) : base(options) {}
 
+        //override sql server w/postgres (or another db server)
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseNpgsql(Environment.GetEnvironmentVariable("POSTOGRES_DBCONTEXT"));
+            => optionsBuilder.UseNpgsql(Environment.GetEnvironmentVariable("POSTGRES_DBCONTEXT"));
 
         public DbSet<Course> Courses { get; set; }
 

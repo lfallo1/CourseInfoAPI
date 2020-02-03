@@ -10,7 +10,6 @@
   "profiles": {
     "CourseInfoAPI": {
       "commandName": "Project",
-      "launchBrowser": true,
       "environmentVariables": {
         "POSTGRES_DBCONTEXT": "Host=localhost;Database=CourseInfo;Username=postgres;Password=admin",
         "COURSE_INFO_SQL_CONNECTION_STRING": "\"User ID=postgres;Password=admin;Server=localhost;Port=5432;Database=CourseInfo;\"",

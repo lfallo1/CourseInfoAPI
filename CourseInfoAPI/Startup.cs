@@ -1,3 +1,4 @@
+using System;
 using AutoMapper;
 using CourseInfoAPI.DbContexts;
 using CourseInfoAPI.Services;
@@ -7,7 +8,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
 
 namespace CityInfoAPI
 {
