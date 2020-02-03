@@ -7,7 +7,10 @@ namespace CourseInfoAPI.DbContexts
     public class CourseLibraryContext : DbContext
     {
 
-        public CourseLibraryContext(DbContextOptions<CourseLibraryContext> options) : base(options) { }
+        public CourseLibraryContext(DbContextOptions<CourseLibraryContext> options) : base(options) {}
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+            => optionsBuilder.UseNpgsql(Environment.GetEnvironmentVariable("POSTOGRES_DBCONTEXT"));
 
         public DbSet<Course> Courses { get; set; }
 

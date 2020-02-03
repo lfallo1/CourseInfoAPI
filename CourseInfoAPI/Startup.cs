@@ -26,10 +26,13 @@ namespace CityInfoAPI
 
             services.AddScoped<ICourseLibraryRepository, CourseLibraryRepository>();
 
-            services.AddDbContext<CourseLibraryContext>(options =>
-            {
-                options.UseSqlServer(Environment.GetEnvironmentVariable("COURSE_INFO_SQL_CONNECTION_STRING"));
-            });
+            //services.AddDbContext<CourseLibraryContext>(options =>
+            //{
+            //    options.UseSqlServer(Environment.GetEnvironmentVariable("COURSE_INFO_SQL_CONNECTION_STRING"));
+            //});
+
+            services.AddEntityFrameworkNpgsql().AddDbContext<CourseLibraryContext>(opt =>
+                opt.UseNpgsql(Environment.GetEnvironmentVariable("COURSE_INFO_SQL_CONNECTION_STRING")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
