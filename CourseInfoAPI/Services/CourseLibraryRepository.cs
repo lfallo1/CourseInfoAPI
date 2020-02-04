@@ -1,10 +1,9 @@
-﻿using CourseInfoAPI.DbContexts;
-using CourseInfoAPI.Entities;
-using CourseInfoAPI.ResourceParameters;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using CourseInfoAPI.DbContexts;
+using CourseInfoAPI.Entities;
+using CourseInfoAPI.ResourceParameters;
 
 namespace CourseInfoAPI.Services
 {

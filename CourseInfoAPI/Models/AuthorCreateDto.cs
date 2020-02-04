@@ -1,22 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+using CourseInfoAPI.Controllers;
 
-namespace CourseInfoAPI.Entities
+namespace CourseInfoAPI.Models
 {
-    public class Author
+    public class AuthorCreateDto
     {
-
-        public Author()
-        {
-            Courses = new List<Course>();
-        }
-
-        [Key]
-        public Guid Id { get; set; }
-
         [Required]
         [MaxLength(50)]
         public string FirstName { get; set; }
@@ -32,7 +22,6 @@ namespace CourseInfoAPI.Entities
         [MaxLength(50)]
         public string MainCategory { get; set; }
 
-        public ICollection<Course> Courses { get; set; }
-
+        public ICollection<CourseCreateDto> Courses { get; set; } = new List<CourseCreateDto>();
     }
 }

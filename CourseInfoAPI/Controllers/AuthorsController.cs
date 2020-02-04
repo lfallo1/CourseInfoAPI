@@ -1,11 +1,11 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using AutoMapper;
 using CourseInfoAPI.Entities;
 using CourseInfoAPI.Models;
 using CourseInfoAPI.ResourceParameters;
 using CourseInfoAPI.Services;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 
 namespace CourseInfoAPI.Controllers
 {
@@ -31,7 +31,7 @@ namespace CourseInfoAPI.Controllers
             return Ok(_mapper.Map<IEnumerable<AuthorDto>>(authors));
         }
 
-        [HttpGet("{authorId:guid}")]
+        [HttpGet("{authorId:guid}", Name = "GetAuthor")]
         public  ActionResult<AuthorDto> getAuthorById(Guid authorId)
         {
             var author = _courseLibraryRepository.GetAuthor(authorId);
@@ -40,6 +40,23 @@ namespace CourseInfoAPI.Controllers
                 return NotFound();
             }
             return Ok(_mapper.Map<AuthorDto>(author));
+        }
+
+        [HttpPost]
+        public ActionResult<AuthorDto> createAuthor(AuthorCreateDto authorCreateDto)
+        {
+            /* Automatically checked because of ApiController annotation */
+            //if(null == authorCreateDto)
+            //{
+            //    return BadRequest();
+            //}
+            var author = _mapper.Map<Author>(authorCreateDto);
+            _courseLibraryRepository.AddAuthor(author);
+            _courseLibraryRepository.Save();
+            var authorForReturn = _mapper.Map<AuthorDto>(author);
+            return CreatedAtRoute("GetAuthor",
+                new { authorId = authorForReturn.Id },
+                authorForReturn);
         }
     }
 }

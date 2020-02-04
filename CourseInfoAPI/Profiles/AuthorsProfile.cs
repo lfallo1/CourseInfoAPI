@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using AutoMapper;
 using CourseInfoAPI.Entities;
 using CourseInfoAPI.Helpers;
 using CourseInfoAPI.Models;
@@ -17,6 +18,8 @@ namespace CourseInfoAPI.Profiles
                     dest => dest.Age,
                     opt => opt.MapFrom(src => src.DateOfBirth.GetCurrentAge())
                 );
+
+            CreateMap<AuthorCreateDto, Author>();
         }
     }
 }
