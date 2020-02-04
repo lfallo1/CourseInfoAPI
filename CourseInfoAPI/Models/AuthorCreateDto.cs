@@ -17,13 +17,14 @@ namespace CourseInfoAPI.Models
         public string LastName { get; set; }
 
         [Required]
-        [AuthorMinAgeAttribute(MinAge = 13)]
+        [AuthorMinAge(MinAge = 13)]
         public DateTimeOffset DateOfBirth { get; set; }
 
         [Required]
         [MaxLength(50)]
         public string MainCategory { get; set; }
 
+        /* dummy properties for validation testing */
         public string ZipCode { get; set; }
 
         public string CountryCode { get; set; }

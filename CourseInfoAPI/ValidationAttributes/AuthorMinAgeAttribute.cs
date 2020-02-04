@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using CourseInfoAPI.Helpers;
-using CourseInfoAPI.Models;
 
 namespace CourseInfoAPI.ValidationAttributes
 {
