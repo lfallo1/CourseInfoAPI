@@ -8,7 +8,7 @@ namespace CourseInfoAPI.Helpers
         {
             var currentDate = DateTime.UtcNow;
             int age = currentDate.Year - dateTimeOffset.Year;
-            if (currentDate < dateTimeOffset)
+            if (currentDate.DayOfYear < dateTimeOffset.DayOfYear)
             {
                 age--;
             }

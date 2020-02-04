@@ -1,9 +1,9 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace CourseInfoAPI.Controllers
 {
-    public class CourseCreateDto
+    public class CourseCreateDto : IValidatableObject
     {
         [Required]
         [MaxLength(100)]
@@ -12,5 +12,14 @@ namespace CourseInfoAPI.Controllers
         [Required]
         [MaxLength(1500)]
         public string Description { get; set; }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (Title == Description)
+            {
+                yield return new ValidationResult("Description should be different from title",
+                    new[] { validationContext.ObjectType.Name });
+            }
+        }
     }
 }

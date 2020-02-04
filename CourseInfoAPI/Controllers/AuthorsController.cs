@@ -25,14 +25,14 @@ namespace CourseInfoAPI.Controllers
 
         [HttpGet]
         [HttpHead]
-        public ActionResult<IEnumerable<AuthorDto>> getAuthors([FromQuery] AuthorsResourceParameters authorsResourceParameters)
+        public ActionResult<IEnumerable<AuthorDto>> GetAuthors([FromQuery] AuthorsResourceParameters authorsResourceParameters)
         {
             var authors = _courseLibraryRepository.GetAuthors(authorsResourceParameters);
             return Ok(_mapper.Map<IEnumerable<AuthorDto>>(authors));
         }
 
         [HttpGet("{authorId:guid}", Name = "GetAuthor")]
-        public  ActionResult<AuthorDto> getAuthorById(Guid authorId)
+        public  ActionResult<AuthorDto> GetAuthorById(Guid authorId)
         {
             var author = _courseLibraryRepository.GetAuthor(authorId);
             if (null == author)
@@ -43,7 +43,7 @@ namespace CourseInfoAPI.Controllers
         }
 
         [HttpPost]
-        public ActionResult<AuthorDto> createAuthor(AuthorCreateDto authorCreateDto)
+        public ActionResult<AuthorDto> CreateAuthor(AuthorCreateDto authorCreateDto)
         {
             /* Automatically checked because of ApiController annotation */
             //if(null == authorCreateDto)
@@ -57,6 +57,13 @@ namespace CourseInfoAPI.Controllers
             return CreatedAtRoute("GetAuthor",
                 new { authorId = authorForReturn.Id },
                 authorForReturn);
+        }
+
+        [HttpOptions]
+        public ActionResult AuthorOptions()
+        {
+            Response.Headers.Add("Allow", "GET,POST,OPTIONS,HEAD");
+            return Ok();
         }
     }
 }
