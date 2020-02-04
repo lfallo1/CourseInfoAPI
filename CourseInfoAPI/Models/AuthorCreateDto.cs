@@ -24,7 +24,7 @@ namespace CourseInfoAPI.Models
         [MaxLength(50)]
         public string MainCategory { get; set; }
 
-        /* dummy properties for validation testing */
+        /* dummy properties for fluent-validation example */
         public string ZipCode { get; set; }
 
         public string CountryCode { get; set; }

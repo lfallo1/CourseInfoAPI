@@ -23,5 +23,6 @@
     <Folder Include="ValidationAttributes\FluentValidators\" />
     <Folder Include="ValidationAttributes\FluentValidatorExtensions\" />
     <Folder Include="ValidationAttributes\FluentValidatorsCustom\" />
+    <Folder Include="Models\Abstract\" />
   </ItemGroup>
 </Project>

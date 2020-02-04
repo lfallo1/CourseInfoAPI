@@ -67,5 +67,28 @@ namespace CourseInfoAPI.Controllers
                 new { authorId = authorId, courseId = courseEntity.Id },
                 courseForReturn);
         }
+
+        [HttpPut("{courseId}")]
+        public ActionResult<CourseDto> createCourseForAuthor(Guid authorId, Guid courseId, CourseUpdateDto courseUpdateDto)
+        {
+            if (!_courseLibraryRepository.AuthorExists(authorId))
+            {
+                return NotFound();
+            }
+            var courseFromRepo = _courseLibraryRepository.GetCourse(authorId, courseId);
+            if (null == courseFromRepo)
+            {
+                return NotFound();
+            }
+
+            _mapper.Map(courseUpdateDto, courseFromRepo);
+
+            //not implemented in repo since entity auto updated during map - but future proof in case repo implementation changes
+            _courseLibraryRepository.UpdateCourse(courseFromRepo);
+
+            _courseLibraryRepository.Save();
+
+            return NoContent();
+        }
     }
 }
