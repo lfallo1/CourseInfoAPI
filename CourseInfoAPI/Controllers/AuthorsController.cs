@@ -5,10 +5,12 @@ using CourseInfoAPI.Entities;
 using CourseInfoAPI.Models;
 using CourseInfoAPI.ResourceParameters;
 using CourseInfoAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CourseInfoAPI.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/authors")]
     //[Route("api/[controller]")]

@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CourseInfoAPI.Migrations
 {
     [DbContext(typeof(CourseLibraryContext))]
-    [Migration("20200203173110_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20200205184508_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -118,7 +118,6 @@ namespace CourseInfoAPI.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("character varying(1500)")
                         .HasMaxLength(1500);
 
@@ -161,6 +160,50 @@ namespace CourseInfoAPI.Migrations
                             AuthorId = new Guid("2902b665-1190-4c70-9915-b9c2d7680450"),
                             Description = "In this course you'll learn how to sing all-time favourite pirate songs without sounding like you actually know the words or how to hold a note.",
                             Title = "Singalong Pirate Hits"
+                        });
+                });
+
+            modelBuilder.Entity("CourseInfoAPI.Entities.User", b =>
+                {
+                    b.Property<string>("Username")
+                        .HasColumnType("text");
+
+                    b.Property<DateTimeOffset>("DateOfBirth")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Username");
+
+                    b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Username = "billsmith123",
+                            DateOfBirth = new DateTimeOffset(new DateTime(1950, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, -4, 0, 0, 0)),
+                            Email = "billsmith123@gmail.com",
+                            Password = "$2b$10$fDkwB3ta4mnrUC9UQNuOJ.sEAoHkqNlAmYKBgJQlsA1NH5AlBKI6G"
+                        },
+                        new
+                        {
+                            Username = "johndoe123",
+                            DateOfBirth = new DateTimeOffset(new DateTime(1984, 4, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, -5, 0, 0, 0)),
+                            Email = "johndoe123@gmail.com",
+                            Password = "$2b$10$45H1mREdsS3XqCpJUx1YfOW7Y2zI4Ka0FvFjTQhLQxVoQvXMD.IGC"
+                        },
+                        new
+                        {
+                            Username = "turtle123",
+                            DateOfBirth = new DateTimeOffset(new DateTime(1975, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, -5, 0, 0, 0)),
+                            Email = "turtle123@gmail.com",
+                            Password = "$2b$10$3gVvLo.ZePcBmlA7oLDnl.cULfs2GHXSNx1PQOwN/JPMLdo8S1RXu"
                         });
                 });
 

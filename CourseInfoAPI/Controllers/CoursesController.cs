@@ -2,12 +2,14 @@
 using CourseInfoAPI.Entities;
 using CourseInfoAPI.Models;
 using CourseInfoAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 
 namespace CourseInfoAPI.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/authors/{authorId:guid}/courses")]
     public class CoursesController : ControllerBase
@@ -69,7 +71,7 @@ namespace CourseInfoAPI.Controllers
         }
 
         [HttpPut("{courseId}")]
-        public ActionResult<CourseDto> createCourseForAuthor(Guid authorId, Guid courseId, CourseUpdateDto courseUpdateDto)
+        public IActionResult createCourseForAuthor(Guid authorId, Guid courseId, CourseUpdateDto courseUpdateDto)
         {
             if (!_courseLibraryRepository.AuthorExists(authorId))
             {

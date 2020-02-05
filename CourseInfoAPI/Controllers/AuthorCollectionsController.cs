@@ -5,10 +5,12 @@ using AutoMapper;
 using CourseInfoAPI.Helpers;
 using CourseInfoAPI.Models;
 using CourseInfoAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CourseInfoAPI.API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/authorcollections")]
     public class AuthorCollectionsController : ControllerBase

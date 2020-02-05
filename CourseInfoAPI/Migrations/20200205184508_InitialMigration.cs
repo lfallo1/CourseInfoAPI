@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CourseInfoAPI.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -23,12 +23,26 @@ namespace CourseInfoAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Username = table.Column<string>(nullable: false),
+                    Password = table.Column<string>(nullable: false),
+                    Email = table.Column<string>(nullable: false),
+                    DateOfBirth = table.Column<DateTimeOffset>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Username);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Courses",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
                     Title = table.Column<string>(maxLength: 100, nullable: false),
-                    Description = table.Column<string>(maxLength: 1500, nullable: false),
+                    Description = table.Column<string>(maxLength: 1500, nullable: true),
                     AuthorId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
@@ -57,6 +71,16 @@ namespace CourseInfoAPI.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Username", "DateOfBirth", "Email", "Password" },
+                values: new object[,]
+                {
+                    { "billsmith123", new DateTimeOffset(new DateTime(1950, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, -4, 0, 0, 0)), "billsmith123@gmail.com", "$2b$10$fDkwB3ta4mnrUC9UQNuOJ.sEAoHkqNlAmYKBgJQlsA1NH5AlBKI6G" },
+                    { "johndoe123", new DateTimeOffset(new DateTime(1984, 4, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, -5, 0, 0, 0)), "johndoe123@gmail.com", "$2b$10$45H1mREdsS3XqCpJUx1YfOW7Y2zI4Ka0FvFjTQhLQxVoQvXMD.IGC" },
+                    { "turtle123", new DateTimeOffset(new DateTime(1975, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, -5, 0, 0, 0)), "turtle123@gmail.com", "$2b$10$3gVvLo.ZePcBmlA7oLDnl.cULfs2GHXSNx1PQOwN/JPMLdo8S1RXu" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Courses",
                 columns: new[] { "Id", "AuthorId", "Description", "Title" },
                 values: new object[,]
@@ -77,6 +101,9 @@ namespace CourseInfoAPI.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Courses");
+
+            migrationBuilder.DropTable(
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Authors");

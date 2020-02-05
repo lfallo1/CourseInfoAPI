@@ -1,6 +1,7 @@
 ﻿using System;
 using CourseInfoAPI.Entities;
 using Microsoft.EntityFrameworkCore;
+using static BCrypt.Net.BCrypt;
 
 namespace CourseInfoAPI.DbContexts
 {
@@ -11,15 +12,42 @@ namespace CourseInfoAPI.DbContexts
 
         //override sql server w/postgres (or another db server)
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseNpgsql(Environment.GetEnvironmentVariable("POSTGRES_DBCONTEXT"));
+            => optionsBuilder.UseNpgsql("Host=localhost;Database=CourseInfo;Username=postgres;Password=admin");
+            //=> optionsBuilder.UseNpgsql(Environment.GetEnvironmentVariable("POSTGRES_DBCONTEXT"));
 
         public DbSet<Course> Courses { get; set; }
 
         public DbSet<Author> Authors { get; set; }
 
+        public DbSet<User> Users { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // seed the database with dummy data
+            modelBuilder.Entity<User>().HasData(
+                new User()
+                {
+                    Username = "billsmith123",
+                    Password = HashPassword("12345678", GenerateSalt()),
+                    Email = "billsmith123@gmail.com",
+                    DateOfBirth = new DateTime(1950, 7, 23)
+                },
+                new User()
+                {
+                    Username = "johndoe123",
+                    Password = HashPassword("abcdefgh", GenerateSalt()),
+                    Email = "johndoe123@gmail.com",
+                    DateOfBirth = new DateTime(1984, 4, 15)
+                },
+                new User()
+                {
+                    Username = "turtle123",
+                    Password = HashPassword("1234abcd", GenerateSalt()),
+                    Email = "turtle123@gmail.com",
+                    DateOfBirth = new DateTime(1975, 1, 5)
+                }
+                );
+
             modelBuilder.Entity<Author>().HasData(
                 new Author()
                 {
