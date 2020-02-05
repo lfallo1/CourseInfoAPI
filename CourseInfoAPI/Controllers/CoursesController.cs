@@ -64,7 +64,7 @@ namespace CourseInfoAPI.Controllers
             var courseForReturn = _mapper.Map<CourseDto>(courseEntity);
 
             return CreatedAtRoute("GetCourseForAuthor",
-                new { authorId = authorId, courseId = courseEntity.Id },
+                new { authorId, courseId = courseEntity.Id },
                 courseForReturn);
         }
 
@@ -78,7 +78,17 @@ namespace CourseInfoAPI.Controllers
             var courseFromRepo = _courseLibraryRepository.GetCourse(authorId, courseId);
             if (null == courseFromRepo)
             {
-                return NotFound();
+                var courseEntity = _mapper.Map<Course>(courseUpdateDto);
+
+                _courseLibraryRepository.AddCourse(authorId, courseEntity);
+
+                _courseLibraryRepository.Save();
+
+                var courseForReturn = _mapper.Map<CourseDto>(courseEntity);
+
+                return CreatedAtRoute("GetCourseForAuthor",
+                    new { authorId, courseId = courseEntity.Id },
+                    courseForReturn);
             }
 
             _mapper.Map(courseUpdateDto, courseFromRepo);
